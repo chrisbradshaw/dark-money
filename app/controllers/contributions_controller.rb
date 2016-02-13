@@ -1,0 +1,2 @@
+class ContributionsController < ApplicationController
+end

@@ -1,0 +1,2 @@
+class RollCallsController < ApplicationController
+end

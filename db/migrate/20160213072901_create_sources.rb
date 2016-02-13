@@ -1,5 +1,4 @@
 class CreateSources < ActiveRecord::Migration
-
   def self.up
     create_table :sources do |t|
       t.string :name, :keyword
@@ -11,5 +10,4 @@ class CreateSources < ActiveRecord::Migration
   def self.down
     drop_table :sources
   end
-
 end

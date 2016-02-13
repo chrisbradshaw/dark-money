@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
-
-  resources :sources
   root 'welcome#index'
+  get 'welcome#help'
+  get 'welcome#about'
+  get 'welcome#contact'
+
+  resources :roll_calls
+  resources :legislators
+  resources :examples
+  resources :districts
+  resources :contributions
+  resources :sources
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

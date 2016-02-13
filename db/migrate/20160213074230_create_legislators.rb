@@ -1,5 +1,4 @@
 class CreateLegislators < ActiveRecord::Migration
-
   def self.up
     create_table :legislators do |t|
       t.string :chamber, :name, :gender, :district, :state, :party, :bioguide_id
@@ -9,9 +8,8 @@ class CreateLegislators < ActiveRecord::Migration
     add_index :legislators, [:state, :district]
     add_index :legislators, :bioguide_id
   end
-  
+
   def self.down
     drop_table :legislators
   end
-
 end
