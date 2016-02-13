@@ -1,0 +1,53 @@
+<div class="recency">
+  Legislator data is updated daily, and should be current.
+</div>
+
+<table class="grid">
+  <tr>
+    <td>
+      <%= field_checkbox :legislator, :name %>
+    </td>
+    <td>
+      <%= field_checkbox :legislator, :chamber %>
+    </td>
+    <td>
+      <%= field_checkbox :legislator, :state %>
+    </td>
+    <td>
+      <%= field_checkbox :legislator, :party %>
+    </td>
+    <td>
+      <%= field_checkbox :legislator, :district %>
+    </td>
+    <td>
+      <%= field_checkbox :legislator, :gender %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= field_checkbox :legislator, :age %>
+    </td>
+    <td>
+      <%= field_checkbox :legislator, :phone %>
+    </td>
+    <td>
+      <%= field_checkbox :legislator, :website %>
+    </td>
+    <td>
+      <%= field_checkbox :legislator, :twitter_id, :title => 'Twitter' %>
+    </td>
+    <td>
+      <%= field_checkbox :legislator, :youtube_url, :title => 'YouTube' %>
+    </td>
+  </tr>
+</table>
+<table class="grid">  
+  <tr>
+    <td>
+      <%= field_checkbox :legislator, :committees, :title => 'Committee Memberships' %>
+    </td>
+    <td>
+      <%= field_checkbox :legislator, :subcommittees, :title => 'Subcommittee Memberships' %>
+    </td>
+  </tr>
+</table>

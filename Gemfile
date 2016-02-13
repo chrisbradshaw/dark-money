@@ -61,4 +61,5 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'puma'
 
 gem "font-awesome-rails"
+gem 'dotenv', '~> 2.1'
 
