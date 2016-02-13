@@ -1,0 +1,35 @@
+dark$ is a dynamic, sortable data visualization platform illustrating Members of Congress voting record and donor contributions d3.js
+
+Sources:
+
+Sunlight Labs API - basic information on members of Congress and the committees they sit on (just registered for API key)
+
+US Census data - demographic information on congressional districts.
+
+OpenSecrets.org - industry contribution data.
+
+GovTrack.us -congressional vote history.
+
+Ruby version 2.3.0
+
+System dependencies: will use many gems from this list:
+
+github.com/hothero/awesome-rails-gem
+
+Source code originally required gems (but we may not): sinatra, htmlentities, activerecord, activesupport, open-uri, json, fastercsv, hpricot, httparty, technicalpickles-daywalker (from GitHub).
+
+Configuration
+
+Database layout:
+
+Models: sources, house (aka legislators), votes, RollCalls (has column of bill_title and chamber), districts, contributions, candidates, committees, source contributions
+
+Database initialization - carefully follow the 22 migrations in source file to make sure we include correct columns the first time (they migrated up/down several times and changed column names)
+
+Services (job queues, cache servers, search engines, etc.) - yes!
+
+Deployment instructions: Heroku
+
+Former code with Sinatra Routing: github.com/sunlightlabs/congrelate
+
+Video of former functionality: www.dailymotion.com/video/x2q8c04
