@@ -1,28 +1,69 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
- *
- *= require_tree .
- *= require_self
- */
-
+$btn-primary-bg: #BE3729;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+
+
+
+
+/* You could use :after - it doesn't really matter */
+
+#landing-center {
+  margin: 3%;
+  padding: 3%;
+  z-index: 1;
+  background-color: rgba(69, 69, 69, 0.2);
+}
+
+#landing-center .btn-primary center {
+  
+margin: 5%;
+}
+
+#go-button {
+  margin-left: 43%;
+}
+
+#landing {
+    position: relative;
+    background: #5C97FF;
+    overflow: hidden;
+}
+
+#landing:before {
+
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.6;
+    background-image: url(/assets/capital-building.jpg);
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+
+.landing {
+    font-size: 2em;
+    color: #fff;
+    padding: 8%;
+    margin: 1% 2%;
+}
 /* universal */
 $gray-medium-light: #eaeaea;
 /* universal */
 body {
-padding-top: 60px;
+
 }
 section {
 overflow: auto;
@@ -68,6 +109,7 @@ text-transform: uppercase;
 letter-spacing: -1px;
 padding-top: 9px;
 font-weight: bold;
+
 &:hover {
 color: white;
 text-decoration: none;

@@ -1,0 +1,28 @@
+<h1>Contributions</h1>
+
+
+<table>
+  
+  <thead>
+
+
+<% @contribution.each do |k,v| %>
+  <% v.each do |attr| %>
+      <tr>
+        <td><%= attr[0] %></td>
+        <td><%= attr[1] %></td>
+      </tr>
+      <% end %>
+      <% end %>
+
+  <% @contributors.each do |k,v| %>
+   <% v.each do |attr| %>
+        <tr>
+        <td><%= attr[0] %></td>
+        <td><%= attr[1] %></td>
+      </tr>
+
+      <% end %>
+<% end %>
+  </tbody>
+</table>

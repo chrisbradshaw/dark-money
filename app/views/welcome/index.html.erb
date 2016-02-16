@@ -1,9 +1,17 @@
-<div class="center jumbotron">
-<h1>dark$</h1>
-<h2>
-Open Secrets based data application.
-</h2>
-<%= link_to "Sign up now!", '#', class: "btn btn-lg btn-primary" %>
+<div class="container-fluid" id="landing">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" id="landing-center">
+
+        <h2 class ="landing">
+            Open minded, nonpartisan visualization of legislative voting records and other publically disclosed data.
+            </h2>
+
+    
+     <%# link_to image_tag("dm-logo.jpg", alt: "Data Aggregator"),
+                '#', id: "dm-logo" %>
+
+           <%= link_to "Search", '#', class: "btn btn-lg btn-primary center", id: "go-button" %>
+      </div>
+      <div class="col-xs-5"></div>
 </div>
-<%= link_to image_tag("rails.png", alt: "Rails logo"),
-'http://rubyonrails.org/' %>

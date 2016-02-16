@@ -69,7 +69,7 @@ class Legislator < ActiveRecord::Base
   def self.update(options = {})
     options[:committees] ||= false
 
-    Sunlight::Base.api_key = api_key
+    Sunlight::Base.api_key = '053d9545fcc9422595280613ed6d853e'
     api_legislators = Sunlight::Legislator.all_where in_office: 1
     old_legislators = Legislator.active.all
 

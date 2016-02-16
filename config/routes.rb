@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   root 'welcome#index'
-  get 'welcome#help'
-  get 'welcome#about'
-  get 'welcome#contact'
+  get 'help'    => 'welcome#help'
+  get 'about'   => 'welcome#about'
+  get 'contact' => 'welcome#contact'
 
+  resources :welcome
   resources :roll_calls
   resources :legislators
   resources :examples

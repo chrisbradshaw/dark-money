@@ -1,0 +1,43 @@
+<div class="recency">
+  Data is from the 2000 census, and was reaggregated (but not re-estimated) in 2006 for redrawn congressional districts.
+</div>
+
+<table class="grid">
+  <tr>
+    <td>
+      <%= field_checkbox :district, :blacks, :title => '% Black' %>
+    </td>
+    <td>
+      <%= field_checkbox :district, :whites, :title => '% White' %>
+    </td>
+    <td>
+      <%= field_checkbox :district, :hispanics, :title => '% Hispanic' %>
+    </td>
+    <td>
+      <%= field_checkbox :district, :american_indians, :title => '% American Indian' %>
+    </td>
+    <td>
+      <%= field_checkbox :district, :asians, :title => '% Asian' %>
+    </td>
+    <td>
+      <%= field_checkbox :district, :males, :title => '% Male' %>
+    </td>
+    <td>
+      <%= field_checkbox :district, :females, :title => '% Female' %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= field_checkbox :district, :median_age %>
+    </td>
+    <td colspan='2'>
+      <%= field_checkbox :district, :median_household_income %>
+    </td>
+    <td>
+      <%= field_checkbox :district, :median_house_value %>
+    </td>
+    <td colspan='3'>
+      <%= field_checkbox :district, :median_rent %>
+    </td>
+  </tr>
+</table>
