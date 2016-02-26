@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'httparty'
+# require 'httparty'
 module OpenSecrets
   class Base
     include HTTParty
