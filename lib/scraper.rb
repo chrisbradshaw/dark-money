@@ -7,7 +7,7 @@ require 'pry'
     attr_reader :parse_page
 
     def initialize
-      page = HTTParty.get("http://www.opensecrets.org/outsidespending/summ.php?cycle=2016&disp=I&type=A")
+      page = HTTParty.get("https://www.opensecrets.org/outsidespending/summ.php?cycle=2016&disp=I&type=A")
       @parse_page ||= Nokogiri::HTML(page) # memorized the @parse_page so it only gets assigned once (the very first time)
     end
 
