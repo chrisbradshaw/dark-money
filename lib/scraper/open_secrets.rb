@@ -1,6 +1,6 @@
 # require 'HTTParty'
-require 'Nokogiri'
-require 'pry'
+# require 'Nokogiri'
+# require 'pry'
 
 module Scraper
   class OpenSecrets
