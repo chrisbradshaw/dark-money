@@ -236,7 +236,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
   font-awesome-rails
-  httparty (~> 0.13.7)
+  httparty
   jbuilder (~> 2.0)
   jquery-rails
   pg (~> 0.15)
