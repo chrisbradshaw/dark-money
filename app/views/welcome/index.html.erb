@@ -1,5 +1,13 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>dark$</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js"></script>
+  
+</head>
 
 <body>
 <div class="row">
@@ -10,6 +18,9 @@
   <svg></svg>
 </div>
 
+<style> body {
+ background-color: #000; 
+}</style>
 
 <script>
 
@@ -124,21 +135,54 @@ d3.json("data/open_secrets_donor", function(error, data) {
 
     return chart;
   });
-})
+});
 
 
 };
 
 linda();//call linda
 
-
-
 </script>
 <div class="container">
+
+<div class="row">
+
+
+<div class="multiple_elements">
+  
+  <h1>dark$</h2>
+  <div class="ct"><small>Hover/tap on the element for instructions!</small></div>
+  
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary ole" data-toggle="tooltip" data-placement="left" data-original-title="Hover over sections of chart render funding totals ">
+      Data Hover
+    </button>
+
+    <button type="button" class="btn btn-primary ole two" data-toggle="tooltip" data-placement="top" data-original-title="Select a donor category in the top right, to see funding totals progress over time">
+      Donor Category
+    </button>
+
+    <button type="button" class="btn btn-primary ole three" data-toggle="tooltip" data-placement="bottom" data-original-title="Choose between Stacked, Stream and Expanded Viewing Styles">
+      Toggle Views
+    </button>
+
+    <button type="button" class="btn btn-primary ole four" data-toggle="tooltip" data-placement="right" data-original-title="click a specific node on a year column for exact donor informatoin">
+      Yearly Contribution Data
+    </button>
+  </div>
+
+</div>
+
+</body>
+</html>
+
+
+</div>
+</div>
+
 <div class="row">
 <div class="col-xs-1"></div>
 <div class="col-xs-10">
- <h1 id="dark-money-h1">dark$</h1>
  <p class="dark-money-p">The chart above represents "outside spending" by donor industry. The term "outside spending" refers to political expenditures made by groups or individuals independently of, and not coordinated with, candidates' committees. 501(c) <span>"dark money"</span> groups are distinct from super PACs. While both types of entity can raise and spend unlimited sums of money, super PACs "must disclose their donors," while 501(c) groups "must not have politics as their primary purpose but don't have to disclose who gives them money." However, a single individual or group can create both types of entity and combine their powers, making it difficult to trace the original source of funds.</p>
 
  <caption>Data from http://www.opensecrets.org/</caption>
