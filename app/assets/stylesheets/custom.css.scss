@@ -1,0 +1,35 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif:700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+ #chart svg{
+    height: 500px;
+  }
+
+body {
+  font: 12px sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  background-color: black;
+  color: #fff;
+}
+
+span {
+  color: red;
+}
+
+#dark-money-h1 {
+ font-family: 'Droid Serif', serif;
+    margin-left: 46%;
+    padding: .3%;
+}
+
+.dark-money-p {
+    font-size: 1.5em;
+    margin: 3%;
+    padding: .5%;
+}
+
+.nvd3 text {
+  fill: white;
+}
