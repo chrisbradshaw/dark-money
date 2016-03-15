@@ -105,7 +105,7 @@ d3.json("data/open_secrets_donor", function(error, data) {
     finalData.push( singleIndustries[d]  );
   });
 
-  console.log(finalData)
+  console.log(finalData);
 
   nv.addGraph(function() {
     var chart = nv.models.stackedAreaChart()
@@ -149,8 +149,9 @@ linda();//call linda
 
 
 <div class="multiple_elements">
-  
-  <h1>dark$</h2>
+    <%= image_tag("dark-money.png", :id => "dark-money-img", :alt => "rss feed") %>
+  <h2 id="dark-money-h2">dark$</h2>
+
   <div class="ct"><small>Hover/tap on the element for instructions!</small></div>
   
   <div class="btn-group">

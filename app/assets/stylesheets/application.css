@@ -16,16 +16,16 @@
  */
 
 
-.ole,
-.elo {
-  background: rgb(200,240,255);
-  padding: 6px 36px;
-  display: inline-block;
-  font-size: 1.2em;
-  border-radius: 4px;
-  border:0;
-  cursor: pointer;
-  color: #000;
+.ole, .elo {
+    background: #fff;
+    padding: 6px 36px;
+    display: inline-block;
+    font-size: 1.4em;
+    border-radius: 4px;
+    border: 0;
+    font-weight: 600;
+    cursor: pointer;
+    color: #000;
 }
 
 .ct {
