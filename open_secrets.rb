@@ -1,178 +1,120 @@
-# frozen_string_literal: true
-# require 'httparty'
-module OpenSecrets
-  class Base
-    include HTTParty
-    base_uri 'http://www.opensecrets.org/api'
-    default_params output: 'xml'
-    format :xml
-    # OpenSecrets Base constructor.  All OpenSecrets API classes inherit from this one which provides
-    # the common initialization function.  For convenience you can skip providing an 'apikey' to the
-    # constructor if you instead export a OPENSECRETS_API_KEY environment variable which is set to the
-    # value of your API key.
-    #
-    # @option options [String] apikey (nil) an OpenSecrets API Key, this can also be provided in an OPENSECRETS_API_KEY shell environment variable for security and convenience.
-    #
-    def initialize(apikey = 'b67c6e3cc87c65b70206687ecda0cb1c')
-      key =  apikey ||= ENV['OPENSECRETS_API_KEY']
-      fail ArgumentError, 'You must provide an API Key' if key.nil? || key.empty?
-      self.class.default_params apikey: key
+# require 'HTTParty'
+# require 'Nokogiri'
+# require 'pry'
+
+module Scraper
+  class OpenSecrets
+    attr_reader :parse_page
+    attr_reader :year
+
+    def initialize(year)
+      page = HTTParty.get("https://www.opensecrets.org/outsidespending/summ.php?cycle=#{year}&disp=I&type=A")
+      @year = year
+      @parse_page ||= Nokogiri::HTML(page) # memorized the @parse_page so it only gets assigned once (the very first time)
     end
+
+# def as_json(options={})
+#   super(:only => [:first_name,:last_name,:city,:state],
+#         :include => {
+#           :employers => {:only => [:title]},
+#           :roles => {:only => [:name]}
+#         }
+#   )
+# end
+
+ def as_json(options={})
+  name = get_industry
+  total = get_total
+  org = from_organizations
+  indiv = from_individuals
+  lib = to_liberals
+  cons = to_conservatives
+  result = []
+
+  (0...total.size).inject([]) do |results, index|
+    result.push({
+      :year => self.year,
+      :industry => name[index],
+      :total => total[index],
+      :from_organizations => org[index],
+      :from_individuals => indiv[index],
+      :to_liberals => lib[index],
+      :to_conservatives => cons[index]
+    })
   end
-  class Member < OpenSecrets::Base
-    # Provides a list of Congressional legislators and associated attributes for specified subset (state, district or specific CID).
-    #
-    # See : https://www.opensecrets.org/api/?method=getLegislators&output=doc
-    #
-    # @option options [String] :id ("") two character state code, or 4 character district or specific CID
-    #
-    def get_legislators(options = {})
-      fail ArgumentError, 'You must provide a :id option' if options[:id].nil? || options[:id].empty?
-      options[:method] = 'getLegislators'
-      self.class.get('/', query: options)
+  # Rails.logger.debug result
+  result
+ end
+
+    private
+    def get_industry
+      ind = item_container.css("tr").map{|name| name.children[1].text if name.text}.compact
+      ind = ind[1..ind.size]
+      return ind
     end
-    # Returns Personal Financial Disclosure (PFD) information for a member of Congress.
-    #
-    # See : http://www.opensecrets.org/api/?method=memPFDprofile&output=doc
-    #
-    # @option options [String] :cid ("") a CRP CandidateID
-    # @option options [String] :year ("") Get data for specified year.
-    #
-    def pfd(options = {})
-      fail ArgumentError, 'You must provide a :cid option' if options[:cid].nil? || options[:cid].empty?
-      fail ArgumentError, 'You must provide a :year option' if options[:year].nil? || options[:year].empty?
-      options[:method] = 'memPFDprofile'
-      self.class.get('/', query: options)
+
+    def get_total
+      # ind = item_container.css(".tablesorter tbody tr").map{|total| total.css(".number")[0].text if total.text}.compact
+      ind = item_container.css("tbody tr").map{|total| total.css(".number")[0].text if total.text}.compact
+      ind = ind[1..ind.size]
+      return ind
     end
-  end # member
-  class Candidate < OpenSecrets::Base
-    # Provides summary fundraising information for specified politician.
-    #
-    # See : http://www.opensecrets.org/api/?method=candSummary&output=doc
-    #
-    # @option options [String] :cid ("") a CRP CandidateID
-    # @option options [optional, String] :cycle ("") blank values returns current cycle.
-    #
-    def summary(options = {})
-      fail ArgumentError, 'You must provide a :cid option' if options[:cid].nil? || options[:cid].empty?
-      options[:method] = 'candSummary'
-      self.class.get('/', query: options)
+
+    def from_organizations
+      ind = item_container.css("tbody tr").map{|total| total.css(".number")[1].text if total.text}.compact
+      ind = ind[1..ind.size]
+      return ind
     end
-    # Provides the top organizations contributing to specified politician.
-    #
-    # See : http://www.opensecrets.org/api/?method=candContrib&output=doc
-    #
-    # @option options [String] :cid ("") a CRP CandidateID
-    # @option options [optional, String] :cycle ("") 2008 or 2010.
-    #
-    def contributors(options = {})
-      fail ArgumentError, 'You must provide a :cid option' if options[:cid].nil? || options[:cid].empty?
-      options[:method] = 'candContrib'
-      self.class.get('/', query: options)
+
+    def from_individuals
+      ind = item_container.css("tbody tr").map{|total| total.css(".number")[2].text if total.text}.compact
+      ind = ind[1..ind.size]
+      return ind
     end
-    # Provides the top industries contributing to a specified politician.
-    #
-    # See : http://www.opensecrets.org/api/?method=candIndustry&output=doc
-    #
-    # @option options [String] :cid ("") a CRP CandidateID
-    # @option options [optional, String] :cycle ("") blank values returns current cycle.
-    #
-    def industries(options = {})
-      fail ArgumentError, 'You must provide a :cid option' if options[:cid].nil? || options[:cid].empty?
-      options[:method] = 'candIndustry'
-      self.class.get('/', query: options)
+
+    def to_liberals
+      ind = item_container.css("tbody tr").map{|total| total.css(".number")[3].text if total.text}.compact
+      ind = ind[1..ind.size]
+      return ind
     end
-    # Provides total contributed to specified candidate from specified industry for specified cycle.
-    #
-    # See : http://www.opensecrets.org/api/?method=candIndByInd&output=doc
-    #
-    # @option options [String] :cid ("") a CRP CandidateID
-    # @option options [String] :ind ("") a a 3-character industry code
-    # @option options [optional, String] :cycle ("") 2012, 2014 available. leave blank for latest cycle
-    #
-    def contributions_by_industry(options = {})
-      fail ArgumentError, 'You must provide a :cid option' if options[:cid].nil? || options[:cid].empty?
-      fail ArgumentError, 'You must provide a :ind option' if options[:ind].nil? || options[:ind].empty?
-      options[:method] = 'CandIndByInd'
-      self.class.get('/', query: options)
+
+    def to_conservatives
+      ind = item_container.css("tbody tr").map{|total| total.css(".number")[4].text if total.text}.compact
+      ind = ind[1..ind.size]
+      return ind
     end
-    # Provides sector total of specified politician's receipts.
-    #
-    # See : http://www.opensecrets.org/api/?method=candSector&output=doc
-    #
-    # @option options [String] :cid ("") a CRP CandidateID
-    # @option options [optional, String] :cycle ("") blank values returns current cycle.
-    #
-    def sector(options = {})
-      fail ArgumentError, 'You must provide a :cid option' if options[:cid].nil? || options[:cid].empty?
-      options[:method] = 'candSector'
-      self.class.get('/', query: options)
+
+    def item_container
+      parse_page.css("#summary_A")
     end
-  end # candidate
-  class Committee < OpenSecrets::Base
-    # Provides summary fundraising information for a specific committee, industry and Congress number.
-    #
-    # See : http://www.opensecrets.org/api/?method=congCmteIndus&output=doc
-    #
-    # @option options [String] :cmte ("") Committee ID in CQ format
-    # @option options [String] :congno ("") Congress Number (like 110)
-    # @option options [String] :indus ("") Industry code
-    #
-    def by_industry(options = {})
-      fail ArgumentError, 'You must provide a :cmte option' if options[:cmte].nil? || options[:cmte].empty?
-      fail ArgumentError, 'You must provide a :congno option' if options[:congno].nil? || options[:congno].empty?
-      fail ArgumentError, 'You must provide a :indus option' if options[:indus].nil? || options[:indus].empty?
-      options[:method] = 'congCmteIndus'
-      self.class.get('/', query: options)
-    end
-  end # committee
-  class Organization < OpenSecrets::Base
-    # Look up an organization by name.
-    #
-    # See : https://www.opensecrets.org/api/?method=getOrgs&output=doc
-    #
-    # @option options [String] :org ("") name or partial name of organization requested
-    #
-    def get_orgs(options = {})
-      fail ArgumentError, 'You must provide a :org option' if options[:org].nil? || options[:org].empty?
-      options[:method] = 'getOrgs'
-      self.class.get('/', query: options)
-    end
-    # Provides summary fundraising information for the specified organization id.
-    #
-    # See : https://www.opensecrets.org/api/?method=orgSummary&output=doc
-    #
-    # @option options [String] :org ("") CRP orgid (available via 'get_orgs' method)
-    #
-    def org_summary(options = {})
-      fail ArgumentError, 'You must provide a :id option' if options[:id].nil? || options[:id].empty?
-      options[:method] = 'orgSummary'
-      self.class.get('/', query: options)
-    end
-  end # organization
+
+  end
 end
-CID = 'N00007360'.freeze # Nancy Pelosi
-member = OpenSecrets::Member.new
-puts "\n\nMEMBER : GET LEGISLATORS\n\n"
-puts member.get_legislators(id: 'CA')['response']
-puts "\n\nMEMBER : PFD PROFILE\n\n"
-puts member.pfd(cid: CID, year: '2014')['response']
-cand = OpenSecrets::Candidate.new
-puts "\n\nCANDIDATE : SUMMARY\n\n"
-puts cand.summary(cid: CID)['response']
-puts "\n\nCANDIDATE : CONTRIBUTORS\n\n"
-puts cand.contributors(cid: CID)['response']
-puts "\n\nCANDIDATE : INDUSTRIES\n\n"
-puts cand.industries(cid: CID)['response']
-puts "\n\nCANDIDATE : CONTRIBUTIONS BY SPECIFIC INDUSTRY\n\n"
-puts cand.contributions_by_industry(cid: CID, ind: 'K02')['response']
-puts "\n\nCANDIDATE : SECTOR\n\n"
-puts cand.sector(cid: CID)['response']
-com = OpenSecrets::Committee.new
-puts "\n\nCOMMITTEE\n\n"
-puts com.by_industry(cmte: 'HARM', congno: '113', indus: 'F10')['response']
-org = OpenSecrets::Organization.new
-puts "\n\nORGANIZATION : GET ORGANIZATIONS\n\n"
-puts org.get_orgs(org: 'people')['response']
-puts "\n\nORGANIZATION : ORGANIZATION SUMMARY\n\n"
-puts org.org_summary(id: 'D000023248')['response']
+
+ # scraper = Scraper::OpenSecrets.new
+
+ # name = scraper.get_industry
+ # total = scraper.get_total
+ # org = scraper.from_organizations
+ # ind = scraper.from_individuals
+  # lib = scraper.to_liberals
+  # cons = scraper.to_conservatives
+
+  # (0...total.size).each do |index|
+  # puts "- - -  index: #{index + 1} - - - "
+  # puts "Industry: #{name[index]}"
+  # puts "total: #{total[index]}"
+  # puts "From Organizations: #{org[index]}"
+  # puts "From Individuals: #{ind[index]}"
+  # puts "To Liberals: #{lib[index]}"
+  # puts "To Conservatives: #{cons[index]}"
+  # puts " "
+  # end
+
+
+
+
+# (0...image_links.size).each do |index| #three dots don't include last digit. Behave like 0..image_links -1
+#   puts "- - -  index: #{index + 1} - - - "
+#   puts "Name: #{names[index]} | price: #{prices[index]} | description: #{descriptions[index]} | image_link: #{image_links[index]}"
+# end
