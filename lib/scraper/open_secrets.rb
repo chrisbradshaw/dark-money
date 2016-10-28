@@ -29,10 +29,11 @@ module Scraper
   indiv = from_individuals
   lib = to_liberals
   cons = to_conservatives
+  result = []
 
   (0...total.size).inject([]) do |results, index|
-    results.push({
-      :year => self.year, 
+    result.push({
+      :year => self.year,
       :industry => name[index],
       :total => total[index],
       :from_organizations => org[index],
@@ -41,6 +42,8 @@ module Scraper
       :to_conservatives => cons[index]
     })
   end
+  # Rails.logger.debug result
+  result
  end
 
     private
@@ -51,29 +54,40 @@ module Scraper
     end
 
     def get_total
-      item_container.css(".tablesorter tbody tr").map{|total| total.css(".number")[0].text if total.text}.compact
+      # ind = item_container.css(".tablesorter tbody tr").map{|total| total.css(".number")[0].text if total.text}.compact
+      ind = item_container.css("tbody tr").map{|total| total.css(".number")[0].text if total.text}.compact
+      ind = ind[1..ind.size]
+      return ind
     end
 
     def from_organizations
-      item_container.css(".tablesorter tbody tr").map{|total| total.css(".number")[1].text if total.text}.compact
+      ind = item_container.css("tbody tr").map{|total| total.css(".number")[1].text if total.text}.compact
+      ind = ind[1..ind.size]
+      return ind
     end
-   
+
     def from_individuals
-      item_container.css(".tablesorter tbody tr").map{|total| total.css(".number")[2].text if total.text}.compact
+      ind = item_container.css("tbody tr").map{|total| total.css(".number")[2].text if total.text}.compact
+      ind = ind[1..ind.size]
+      return ind
     end
 
     def to_liberals
-      item_container.css(".tablesorter tbody tr").map{|total| total.css(".number")[3].text if total.text}.compact
+      ind = item_container.css("tbody tr").map{|total| total.css(".number")[3].text if total.text}.compact
+      ind = ind[1..ind.size]
+      return ind
     end
 
     def to_conservatives
-      item_container.css(".tablesorter tbody tr").map{|total| total.css(".number")[4].text if total.text}.compact
+      ind = item_container.css("tbody tr").map{|total| total.css(".number")[4].text if total.text}.compact
+      ind = ind[1..ind.size]
+      return ind
     end
 
     def item_container
       parse_page.css("#summary_A")
     end
- 
+
   end
 end
 
