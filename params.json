@@ -1,0 +1,6 @@
+{
+  "name": "dark$",
+  "tagline": "interactive web application illustrating rapid expansion in “dark money” funding, a trend that has grown ~1000% since 2012 in the United States Congress.",
+  "body": "# **dark$**\r\n_### By Chris Bradshaw, Linda Haviv & Matteo Ziff\r\n\r\n**Production version: ** [darkmoney.io](http://www.darkmoney.io) - note please allot up to 30 seconds on initial load for Heroku to boot.\r\n\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
