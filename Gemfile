@@ -1,6 +1,6 @@
+ruby '2.3.0'
 source 'https://rubygems.org'
 
-ruby '2.3.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
 # Use postgresql as the database for Active Record
@@ -20,6 +20,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
+gem 'json', '~> 1.8.3'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -28,7 +29,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
-gem 'httparty'
+gem 'httparty', '~> 0.15.6'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -37,10 +38,10 @@ gem 'httparty'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'pry'
+  gem 'byebug', '~> 9.1'
+  gem 'better_errors', '~> 2.4'
+  gem 'binding_of_caller', '~> 0.7.2'
+  gem 'pry', '~> 0.11.2'
   gem 'rails-pry', '~> 0.0.1'
   gem 'rubycritic'
   gem 'rubocop', '~> 0.36.0'
@@ -52,14 +53,14 @@ group :development do
   gem 'web-console', '~> 2.0'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'spring', '~> 2.0', '>= 2.0.2'
 end
 
-gem 'rails_12factor'
+gem 'rails_12factor', '~> 0.0.3'
 
 gem 'bootstrap-sass', '~> 3.3.6'
 
-gem 'puma'
+gem 'puma', '~> 3.10'
 
-gem "font-awesome-rails"
+gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.2'
 
